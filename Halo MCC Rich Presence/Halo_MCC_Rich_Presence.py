@@ -1,7 +1,7 @@
 from xbox.webapi.authentication.manager import AuthenticationManager
 from xbox.webapi.common.exceptions import AuthenticationException
 from xbox.webapi.api.client import XboxLiveClient
-from pypresence import Presence
+from pypresence import Presence, Activity
 import sys, time
 
 discord_client_id = 655596739138551848
@@ -39,22 +39,38 @@ while True:
             for ActiveTitles in OnlineDevices:
                 ##check if we're actually playing MCC
                 if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection":
-                    print("We're playing something! Lets's start up Discord RPC")
+                    print("We're playing Halo!")
                     ##start Discord RPC
                     if discord_online_status == False:
+                        print("Discord RPC not running. Starting!")
                         discordRPC.connect()
                         discord_online_status = True
+                        print("Discord RPC Started")
                     ##set the current status
-                    DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
-                    discordRPC.update(large_image='cover', large_text='Halo: MCC', small_image='win10', small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1])
+                    try:
+                        DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
+                        discordRPC.update(large_image='cover', large_text='Halo: MCC', small_image='win10', small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1])
+                    except Exception as e:
+                        print(e)
                     break
-                else:
-                    print("Guess we're not playing anything. Close Discord RPC if active!")
-                    if discord_online_status == True:
-                        discordRPC.close()
-                        discord_online_status == False
+            else:
+                print("Guess we're not playing Halo.")
+                if discord_online_status == True:
+                    print("Closing Discord RPC Connection!")
+                    discordRPC.close()
+                    discord_online_status == False
+        else:
+            print("You're not online on XBL at the moment.")
+            if discord_online_status == True:
+                    print("Closing Discord RPC Connection!")
+                    discordRPC.close()
+                    discord_online_status == False
         time.sleep(15)
-    except:
+    except Exception as e:
+        print(e)
         print("Crashed or received KeyboardInterrupt! Closing Discord RPC and shutting down script...")
-        discordRPC.close()
+        if discord_online_status == True:
+                    print("Closing Discord RPC Connection!")
+                    discordRPC.close()
+                    discord_online_status == False
         sys.exit(0)
