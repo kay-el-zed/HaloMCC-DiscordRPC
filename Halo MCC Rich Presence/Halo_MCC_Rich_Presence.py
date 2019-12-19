@@ -58,13 +58,13 @@ while True:
                 if discord_online_status == True:
                     print("Closing Discord RPC Connection!")
                     discordRPC.close()
-                    discord_online_status == False
+                    discord_online_status = False
         else:
             print("You're not online on XBL at the moment.")
             if discord_online_status == True:
                     print("Closing Discord RPC Connection!")
                     discordRPC.close()
-                    discord_online_status == False
+                    discord_online_status = False
         time.sleep(15)
     except Exception as e:
         print(e)
