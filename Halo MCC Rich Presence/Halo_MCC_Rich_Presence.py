@@ -4,13 +4,17 @@ from xbox.webapi.api.client import XboxLiveClient
 from pypresence import Presence
 import sys, time, os
 
-#update with valid discord_client_id
-discord_client_id = 000000000000
+#update this variable with a valid Client ID. You can get one from creating an application at https://discordapp.com/developers.
+discord_client_id = None
 
 xbox_status_last_change = None
 discord_online_status = False
 
-## Handle XBL API authentication.
+if discord_client_id == None:
+    print("The discord_client_id variable is None. Update the script with a valid Discord client ID.\nGo to https://discordapp.com/developers to create an application for a Client ID.")
+    sys.exit(0)
+
+## Handle XBL API authentication
 try:
     xbox_token = os.getenv('LOCALAPPDATA') + "\\OpenXbox\\xbox\\tokens.json"
     auth_mgr = AuthenticationManager.from_file(xbox_token)
