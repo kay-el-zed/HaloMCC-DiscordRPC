@@ -1,10 +1,12 @@
 from xbox.webapi.authentication.manager import AuthenticationManager
 from xbox.webapi.common.exceptions import AuthenticationException
 from xbox.webapi.api.client import XboxLiveClient
-from pypresence import Presence, Activity
+from pypresence import Presence
 import sys, time
 
-discord_client_id = 655596739138551848
+#update with valid discord_client_id
+discord_client_id = 000000000000
+
 xbox_status_last_change = None
 discord_online_status = False
 
@@ -38,7 +40,7 @@ while True:
             OnlineDevices = XboxPresence['devices']
             for ActiveTitles in OnlineDevices:
                 ##check if we're actually playing MCC
-                if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection":
+                if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection" and ActiveTitles['type'] == "Win32":
                     print("We're playing Halo!")
                     ##start Discord RPC
                     if discord_online_status == False:
