@@ -1,27 +1,34 @@
 from xbox.webapi.authentication.manager import AuthenticationManager
 from xbox.webapi.common.exceptions import AuthenticationException
 from xbox.webapi.api.client import XboxLiveClient
-from pypresence import Presence, Activity
-import sys, time
+from pypresence import Presence
+import sys, time, os
 
-discord_client_id = 655596739138551848
+#update this variable with a valid Client ID. You can get one from creating an application at https://discordapp.com/developers.
+discord_client_id = None
+
 xbox_status_last_change = None
 discord_online_status = False
 
-## Handle XBL API authentication.
+if discord_client_id == None:
+    print("The discord_client_id variable is None. Update the script with a valid Discord client ID.\nGo to https://discordapp.com/developers to create an application for a Client ID.")
+    sys.exit(0)
+
+## Handle XBL API authentication
 try:
-  auth_mgr = AuthenticationManager.from_file('C:/Users/toxic/AppData/Local/OpenXbox/xbox/tokens.json')
+    xbox_token = os.getenv('LOCALAPPDATA') + "\\OpenXbox\\xbox\\tokens.json"
+    auth_mgr = AuthenticationManager.from_file(xbox_token)
 except FileNotFoundError as e:
-  print(
+    print(
     'Failed to load tokens from \'{}\'.\n'
     'ERROR: {}'.format(e.filename, e.strerror)
-  )
-  sys.exit(-1)
+    )
+    sys.exit(-1)
 try:
-  auth_mgr.authenticate(do_refresh=True)
+    auth_mgr.authenticate(do_refresh=True)
 except AuthenticationException as e:
-  print('Authentication failed! Err: %s' % e)
-  sys.exit(-1)
+    print('Authentication failed! Err: %s' % e)
+    sys.exit(-1)
 ## Make the connection to XBL
 xbl_client = XboxLiveClient(auth_mgr.userinfo.userhash, auth_mgr.xsts_token.jwt, auth_mgr.userinfo.xuid)
 
@@ -38,7 +45,7 @@ while True:
             OnlineDevices = XboxPresence['devices']
             for ActiveTitles in OnlineDevices:
                 ##check if we're actually playing MCC
-                if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection":
+                if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection" and ActiveTitles['type'] == "Win32":
                     print("We're playing Halo!")
                     ##start Discord RPC
                     if discord_online_status == False:
