@@ -18,6 +18,7 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
  	3. It will wait until it sees Halo MCC in your Xbox Live presence to display a rich status on Discord.
 
 <h2>Requirements for Building</h2>
+
 * [pypresence](https://github.com/qwertyquerty/pypresence)
 * [xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python)
 * A client ID for an application created in the [Discord developer portal](https://discordapp.com/developers) 
