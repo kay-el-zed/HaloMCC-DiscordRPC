@@ -1,1 +1,1 @@
-pyinstaller  --onefile --icon=C:\Users\Gurrman375D\Documents\GitHub\HaloMCC-DiscordRPC\discord-app-images\halo.ico -F Halo_MCC_Rich_Presence.py
+pyinstaller  --onefile --icon=halo.ico -F Halo_MCC_Rich_Presence.py

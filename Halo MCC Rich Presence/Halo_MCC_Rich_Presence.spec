@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='C:\\Users\\Gurrman375D\\Documents\\GitHub\\HaloMCC-DiscordRPC\\discord-app-images\\halo.ico')
+          console=True , icon='halo.ico')
