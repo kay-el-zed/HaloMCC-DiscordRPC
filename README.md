@@ -30,3 +30,11 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 * Add session timer tracking, i.e. How long a multiplayer session has run for
 * Reduce debugging output.
 * Possibly perform better detection for Halo MCC on PC by checking for processes(?)
+
+<h2>Contributions</h2>
+
+[pypresence](https://github.com/qwertyquerty/pypresence) <b>Written by:</b> [qwertyquerty](https://github.com/qwertyquerty) and [LewdNeko](https://github.com/lewdneko) <b>Notable Contributors:</b> [GiovanniMCMXCIX](https://github.com/GiovanniMCMXCIX), [GhostofGoes](https://github.com/GhostofGoes)
+
+[xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python) uses parts of [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) project template. The authentication code is based on [joealcorn/xbox](https://github.com/joealcorn/xbox)
+
+Base Code [kay-el-zed](https://github.com/kay-el-zed)
