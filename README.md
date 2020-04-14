@@ -1,4 +1,6 @@
 # HaloMCC-DiscordRPC
+[![pypresence](https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20)](https://github.com/qwertyquerty/pypresence)
+
 A python script that grabs your XBL status for Halo MCC and shows it as a Discord rich presence status.
 
 ![preview image](https://i.imgur.com/6PtvoEy.png) ![image](https://user-images.githubusercontent.com/25113575/79253429-0e376080-7e38-11ea-859e-8833482ecd6a.png)
