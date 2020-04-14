@@ -5,13 +5,20 @@ from pypresence import Presence
 import sys, time, os
 
 #update this variable with a valid Client ID. You can get one from creating an application at https://discordapp.com/developers.
-discord_client_id = None
+discord_client_id = int(input("Enter valid Client ID (Must be a Number): "))
+largeI = str(input("Enter Large Image (Must be a Name):"))
+smallI = str(input("Enter Small Image (Must be a Name):"))
 
 xbox_status_last_change = None
 discord_online_status = False
 
 if discord_client_id == None:
     print("The discord_client_id variable is None. Update the script with a valid Discord client ID.\nGo to https://discordapp.com/developers to create an application for a Client ID.")
+    time.sleep(5)
+    sys.exit(0)
+if discord_client_id <= 0:
+    print("That is not a valid id")
+    time.sleep(5)
     sys.exit(0)
 
 ## Handle XBL API authentication
@@ -23,11 +30,13 @@ except FileNotFoundError as e:
     'Failed to load tokens from \'{}\'.\n'
     'ERROR: {}'.format(e.filename, e.strerror)
     )
+    time.sleep(5)
     sys.exit(-1)
 try:
     auth_mgr.authenticate(do_refresh=True)
 except AuthenticationException as e:
     print('Authentication failed! Err: %s' % e)
+    time.sleep(5)
     sys.exit(-1)
 ## Make the connection to XBL
 xbl_client = XboxLiveClient(auth_mgr.userinfo.userhash, auth_mgr.xsts_token.jwt, auth_mgr.userinfo.xuid)
@@ -36,6 +45,7 @@ xbl_client = XboxLiveClient(auth_mgr.userinfo.userhash, auth_mgr.xsts_token.jwt,
 discordRPC = Presence(discord_client_id)
 
 ## Discord RPC update loop
+
 while True:
     try:
         ##get current presence
@@ -56,7 +66,7 @@ while True:
                     ##set the current status
                     try:
                         DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
-                        discordRPC.update(large_image='cover', large_text='Halo: MCC', small_image='win10', small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1])
+                        discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1])
                     except Exception as e:
                         print(e)
                     break
@@ -80,4 +90,5 @@ while True:
                     print("Closing Discord RPC Connection!")
                     discordRPC.close()
                     discord_online_status == False
+        time.sleep(5)
         sys.exit(0)
