@@ -3,6 +3,8 @@
 
 A python script that grabs your XBL status for Halo MCC and shows it as a Discord rich presence status.
 
+![image](https://user-images.githubusercontent.com/25113575/79253429-0e376080-7e38-11ea-859e-8833482ecd6a.png)
+
 ![image](https://user-images.githubusercontent.com/25113575/79253406-024b9e80-7e38-11ea-800f-2445d05d835e.png)
 
 <h2>How to use</h2>
