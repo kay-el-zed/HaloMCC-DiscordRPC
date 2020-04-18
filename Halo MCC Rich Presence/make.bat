@@ -1,1 +1,1 @@
-pyinstaller  --onefile --icon=halo.ico -F Halo_MCC_Rich_Presence.py
+pyinstaller  --onefile --icon=Images/halo.ico -F Halo_MCC_Rich_Presence.py

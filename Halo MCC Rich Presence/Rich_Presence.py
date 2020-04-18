@@ -3,13 +3,24 @@ from xbox.webapi.common.exceptions import AuthenticationException
 from xbox.webapi.api.client import XboxLiveClient
 from pypresence.presence import Presence
 import sys, time, os
+import math, datetime
 
 def main():
     #update this variable with a valid Client ID. You can get one from creating an application at https://discordapp.com/developers.
-    discord_client_id = int(input("Enter valid Client ID (Must be a Number): "))
-    largeI = str(input("Enter Large Image (Must be a Name):"))
-    smallI = str(input("Enter Small Image (Must be a Name):"))
-
+    yn = str(input("Do you want the modify the discord RPC? y/n:"))
+    if (yn == "y" or yn == "Y"):
+        discord_client_id = int(input("Enter valid Client ID (Must be a Number): "))
+        largeI = str(input("Enter Large Image (Must be a Name):"))
+        smallI = str(input("Enter Small Image (Must be a Name):"))
+    elif (yn == "n" or yn == "N"):
+        discord_client_id = 700853075023233024
+        largeI = "large"
+        smallI = "small"
+    else:
+        print("Wrong input. Setting to default.")
+        discord_client_id = 700853075023233024
+        largeI = "large"
+        smallI = "small"
     xbox_status_last_change = None
     discord_online_status = False
 
@@ -57,7 +68,7 @@ def main():
                 for ActiveTitles in OnlineDevices:
                     ##check if we're actually playing MCC
                     if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection" and ActiveTitles['type'] == "Win32":
-                        print("We're playing Halo!")
+                        print("We're playing Halo on PC!")
                         ##start Discord RPC
                         if discord_online_status == False:
                             print("Discord RPC not running. Starting!")
@@ -67,7 +78,23 @@ def main():
                         ##set the current status
                         try:
                             DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
-                            discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1])
+                            browsingStamp = math.floor(datetime.datetime.now() / 1000)
+                            discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1], startTimestamp=browsingStamp)
+                            # TODO:
+                            # Maps Conditional statements
+                            # if (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
+                            #     discordRPC.update(large_image="")
+                            #     time.sleep(15)
+                            # elif (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
+                            #     discordRPC.update(large_image="")
+                            #     time.sleep(15)
+                            # elif (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
+                            #     discordRPC.update(large_image="")
+                            #     time.sleep(15)
+                            # elif (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
+                            #     discordRPC.update(large_image="")
+                            #     time.sleep(15)
+
                         except Exception as e:
                             print(e)
                         break
