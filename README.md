@@ -34,13 +34,10 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 * Reduce debugging output.
 * Possibly perform better detection for Halo MCC on PC by checking for processes(?)
 
-<h2>Contributions</h2>
+<h2>Credits</h2>
 
-[pypresence](https://github.com/qwertyquerty/pypresence) <b>Written by:</b> [qwertyquerty](https://github.com/qwertyquerty) and [LewdNeko](https://github.com/lewdneko) <b>Notable Contributors:</b> [GiovanniMCMXCIX](https://github.com/GiovanniMCMXCIX), [GhostofGoes](https://github.com/GhostofGoes)
+<b>[pypresence](https://github.com/qwertyquerty/pypresence)</b> - Written by: [qwertyquerty](https://github.com/qwertyquerty) and [LewdNeko](https://github.com/lewdneko) Notable Contributors: [GiovanniMCMXCIX](https://github.com/GiovanniMCMXCIX), [GhostofGoes](https://github.com/GhostofGoes)
 
-[xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python) uses parts of [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) project template. The authentication code is based on [joealcorn/xbox](https://github.com/joealcorn/xbox)
+<b>[xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python)</b> - uses parts of [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) project template. The authentication code is based on [joealcorn/xbox](https://github.com/joealcorn/xbox)
 
-Major Contributor: [Gurrman375](https://github.com/Gurrman375)
-
-Base Code: [kay-el-zed](https://github.com/kay-el-zed)
-
+<b>[Gurrman375](https://github.com/Gurrman375)</b> - Major contributor to the repo. Most of the commits come from them.
