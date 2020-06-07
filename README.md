@@ -11,10 +11,10 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 
 1. Install both requirements using pip
 2. Update discord_client_id with your valid application's client ID from the [Discord developer portal](https://discordapp.com/developers).  
-3. Run [release](https://github.com/Gurrman375/HaloMCC-DiscordRPC/releases) . 
+3. Run the latest [release](https://github.com/Gurrman375/HaloMCC-DiscordRPC/releases). 
 	
 	1. Input your xbox sign on account. (Data is stored in AppData/Local/OpenXbox/xbox)
- 	2. Update discord_client_id with your valid application's CID(client ID) from the [Discord developer portal] and small Image and Large Image.(If you don't know how to do this input 687455667602325505 as CID, large, and small)
+ 	2. When prompted, enter your valid application's CID(client ID) from the [Discord developer portal](https://discord.com/developers/applications), along with a small and large image. (If you don't know how to do this, leave the option blank and default settings will be used.)
  	3. It will wait until it sees Halo MCC in your Xbox Live presence to display a rich status on Discord.
 
 <h2>Requirements for Building</h2>
