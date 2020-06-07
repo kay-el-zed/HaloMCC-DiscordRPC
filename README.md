@@ -3,7 +3,7 @@
 
 A python script that grabs your XBL status for Halo MCC and shows it as a Discord rich presence status.
 
-![image](https://user-images.githubusercontent.com/25113575/79253429-0e376080-7e38-11ea-859e-8833482ecd6a.png)
+![image](https://i.imgur.com/51Zdnv9l.png)
 
 ![image](https://user-images.githubusercontent.com/25113575/79253406-024b9e80-7e38-11ea-800f-2445d05d835e.png)
 
@@ -40,4 +40,7 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 
 [xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python) uses parts of [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) project template. The authentication code is based on [joealcorn/xbox](https://github.com/joealcorn/xbox)
 
-Base Code [kay-el-zed](https://github.com/kay-el-zed)
+Major Contributor: [Gurrman375](https://github.com/Gurrman375)
+
+Base Code: [kay-el-zed](https://github.com/kay-el-zed)
+
