@@ -74,12 +74,12 @@ def main():
                             print("Discord RPC not running. Starting!")
                             discordRPC.connect()
                             discord_online_status = True
+                            browsingStamp = math.floor(datetime.datetime.now().timestamp() * 1000)
                             print("Discord RPC Started")
                         ##set the current status
                         try:
                             DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
-                            browsingStamp = math.floor(datetime.datetime.now() / 1000)
-                            discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1], startTimestamp=browsingStamp)
+                            discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1], start=browsingStamp)
                             # TODO:
                             # Maps Conditional statements
                             # if (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
