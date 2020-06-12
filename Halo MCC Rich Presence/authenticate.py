@@ -17,7 +17,6 @@ def __input_prompt(prompt, entries=None):
     Args:
         prompt (str): Prompt string
         entries (list): optional, list of entries to choose from
-
     Returns:
         str: userinput
     """
