@@ -32,9 +32,7 @@ def createToken():
             print("Your Token Has Been Removed.")
             time.sleep(3)
         except OSError:
-            print("You never had a Xbox Live Token. Quite Odd. :/")
-            time.sleep(3)
-            sys.exit(1)
+            print("You never had a Xbox Live Token. Try Creating one.")
     elif(remove == "n" or remove == "N"):
         print("Loading Token.")
         time.sleep(3)

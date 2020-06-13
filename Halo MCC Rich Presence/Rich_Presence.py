@@ -98,7 +98,7 @@ def main():
                             #     time.sleep(15)
                         except Exception as e:
                             print(e)
-                        break
+                time.sleep(5)
             else:
                 print("You're not online on XBL at the moment.")
                 if discord_online_status == True:
