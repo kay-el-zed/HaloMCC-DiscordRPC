@@ -6,6 +6,7 @@ import argparse
 
 import getpass
 
+import removetoken
 from xbox.webapi.authentication.manager import AuthenticationManager
 from xbox.webapi.authentication.two_factor import TwoFactorAuthentication, TwoFactorAuthMethods
 from xbox.webapi.common.exceptions import AuthenticationException, TwoFactorAuthRequired
@@ -85,6 +86,8 @@ def main():
             tokens_loaded = True
         except FileNotFoundError as e:
             print('Failed to load tokens from \'{}\'. Error: {}'.format(e.filename, e.strerror))
+            removetoken.removeExisting()
+
 
     auth_mgr.email_address = args.email
     auth_mgr.password = args.password
