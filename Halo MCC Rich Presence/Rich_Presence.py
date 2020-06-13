@@ -11,17 +11,20 @@ def main():
     yn = str(input("Do you want the modify the discord RPC? y/n:"))
     if (yn == "y" or yn == "Y"):
         discord_client_id = int(input("Enter valid Client ID (Must be a Number): "))
-        largeI = str(input("Enter Large Image (Must be a Name):"))
-        smallI = str(input("Enter Small Image (Must be a Name):"))
+        largeI = str(input("Enter Halo Image (Must be a Name): "))
+        smallI = str(input("Enter Windows Image (Must be a Name): "))
+        smallIM = str(input("Enter Xbox Image (Must be a Name): "))
     elif (yn == "n" or yn == "N"):
         discord_client_id = 700853075023233024
         largeI = "large"
         smallI = "small"
+        smallIM = "xbox"
     else:
         print("Wrong input. Setting to default.")
         discord_client_id = 700853075023233024
         largeI = "large"
         smallI = "small"
+        smallIM = "xbox"
     #xbox_status_last_change = None
     discord_online_status = False
 
@@ -67,9 +70,11 @@ def main():
             if (XboxPresence['state'] == 'Online'):
                 OnlineDevices = XboxPresence['devices']
                 for ActiveTitles in OnlineDevices:
-                    ##check if we're actually playing MCC
-                    print(ActiveTitles['type'])
-                    if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection" and ActiveTitles['type'] == "Win32":
+                    # check if we're actually playing MCC
+                    # print(ActiveTitles['type'])
+                    # print(ActiveTitles['titles'][0]['name'])
+                    # print(OnlineDevices)
+                    if ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection":
                         ##start Discord RPC
                         if discord_online_status == False:
                             print("Discord RPC not running. Starting!")
@@ -80,52 +85,20 @@ def main():
                         ##set the current status
                         try:
                             DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
-                            discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1], start=browsingStamp)
+                            if(ActiveTitles['type'] == "Win32"):
+                                discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on PC", state=DiscordStatus[0], details=DiscordStatus[1], start=browsingStamp)
+                                print("We're playing Halo on PC!")
+                            elif(ActiveTitles['type'] == "XboxOne"):
+                                discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallIM, small_text="Playing on Xbox", state=DiscordStatus[0], details=DiscordStatus[1], start=browsingStamp)
+                                print("We're playing Halo on Xbox One!")
                             # TODO:
                             # Maps Conditional statements
                             # if (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
                             #     discordRPC.update(large_image="")
                             #     time.sleep(15)
-                            print("We're playing Halo on PC!")
                         except Exception as e:
                             print(e)
                         break
-                    elif ActiveTitles['titles'][0]['name'] == "Halo: The Master Chief Collection" and ActiveTitles['type'] == "XboxDurango":
-                            ##start Discord RPC
-                            if discord_online_status == False:
-                                print("Discord RPC not running. Starting!")
-                                discordRPC.connect()
-                                discord_online_status = True
-                                browsingStamp = int(time.time())
-                                print("Discord RPC Started")
-                            ##set the current status
-                            try:
-                                DiscordStatus = ActiveTitles['titles'][0]['activity']['richPresence'].split(" - ")
-                                discordRPC.update(large_image=largeI, large_text='Halo: MCC', small_image=smallI, small_text="Playing on Xbox", state=DiscordStatus[0], details=DiscordStatus[1], start=browsingStamp)
-                                # TODO:
-                                # Maps Conditional statements
-                                # if (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
-                                #     discordRPC.update(large_image="")
-                                #     time.sleep(15)
-                                # elif (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
-                                #     discordRPC.update(large_image="")
-                                #     time.sleep(15)
-                                # elif (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
-                                #     discordRPC.update(large_image="")
-                                #     time.sleep(15)
-                                # elif (discordRPC.update(details=DiscordStatus[1]) == "Anchor 9"):
-                                #     discordRPC.update(large_image="")
-                                #     time.sleep(15)
-                                print("We're playing Halo on PC!")
-                            except Exception as e:
-                                print(e)
-                            break
-                else:
-                    print("Guess we're not playing Halo.")
-                    if discord_online_status == True:
-                        print("Closing Discord RPC Connection!")
-                        discordRPC.close()
-                        discord_online_status = False
             else:
                 print("You're not online on XBL at the moment.")
                 if discord_online_status == True:
@@ -143,4 +116,3 @@ def main():
                         discord_online_status == False
             time.sleep(5)
             sys.exit(0)
-
