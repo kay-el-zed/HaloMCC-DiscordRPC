@@ -2,7 +2,7 @@ import os, time, sys
 
 def main():
     xbox_token = os.getenv('LOCALAPPDATA') + "\\OpenXbox\\xbox\\tokens.json"
-    remove = str(input("Do you want to remove your authenticate token? (Recommended for a Shared Computer) Y/N"))
+    remove = str(input("Do you want to remove your authenticate token? (Recommended for a Shared Computer) Y/N: "))
     if (remove == "y" or remove == "Y"):
         try:
             os.remove(xbox_token)

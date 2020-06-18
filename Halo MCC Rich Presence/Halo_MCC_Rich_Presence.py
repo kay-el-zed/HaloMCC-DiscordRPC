@@ -1,7 +1,12 @@
-import authenticate, Rich_Presence, removetoken, os, time, xbox
+import authenticate, Rich_Presence, removetoken, os, time, xbox, sys, ui
 # From One response 2 Factor does work
-print("2 Factor Authenticate atm does not work. Please disable if you have.")
-removetoken.createToken()
-authenticate.main()
-Rich_Presence.main()
-removetoken.main()
+# removetoken.createToken()
+# authenticate.main()
+# Rich_Presence.main()
+# removetoken.main()
+ui.splashScreen()
+selection = ui.UI()
+ui.option(selection)
+while(selection != None or selection != 5):
+    selection = ui.UI()
+    ui.option(selection)
