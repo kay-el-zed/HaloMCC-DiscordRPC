@@ -11,7 +11,7 @@ def UI():
     print("2. Launch the Rich Presence (Requires a Token)")
     print("3. Current Xbox Live Status (Requires a Token)")
     print("4. Delete your Token")
-    print("5. Exit (You might have to press twice)")
+    print("5. Exit")
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Current Build: 0.2.7")
     print("------------------------------------------------------------------------------------------------------------------------")
