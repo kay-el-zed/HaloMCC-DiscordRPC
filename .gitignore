@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#No longer tracking build or dist folders
+Halo MCC Rich Presence/dist/
+!Halo_MCC_Rich_Presence.exe
+!Xbox_Authentication.bat
+Halo MCC Rich Presence/build/
+Halo MCC Rich Presence/Halo_MCC_Rich_Presence.spec
+
 # User-specific files
 *.rsuser
 *.suo
