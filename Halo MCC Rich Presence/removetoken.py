@@ -6,17 +6,17 @@ def main():
     if (remove == "y" or remove == "Y"):
         try:
             os.remove(xbox_token)
-            print("Your Token Has Been Removed. Have a Nice Day. : - )")
+            print("Your Token Has Been Removed.")
             time.sleep(3)
         except OSError:
-            print("You never had a Xbox Live Token. Quite Odd. :/")
+            print("You never had a Xbox Live Token. If you did then this might be an error.")
             time.sleep(3)
             pass
     elif(remove == "n" or remove == "N"):
-        print("I would recommend you do. Have a Nice Day : - )")
+        print("I would recommend you do.")
         time.sleep(3)
     else:
-        print("Your Live token is stored in Open Xbox or maybe Not. Have a Nice Day. : - )")
+        print("Your Live token is stored in Open Xbox or maybe Not.")
         time.sleep(3)
 def removeExisting():
     xbox_token = (os.getenv('LOCALAPPDATA') + "\\OpenXbox\\xbox\\tokens.json")

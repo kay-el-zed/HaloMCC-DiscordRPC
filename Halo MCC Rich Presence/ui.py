@@ -5,7 +5,6 @@ os.system('color 2')
 def UI():
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Halo: MCC Rich Presence")
-    print("2 Factor Authenticate atm does not work. If it does then contact me on discord.")
     print("------------------------------------------------------------------------------------------------------------------------")
     print("List: ")
     print("1. Create a Token")
@@ -13,6 +12,8 @@ def UI():
     print("3. Current Xbox Live Status (Requires a Token)")
     print("4. Delete your Token")
     print("5. Exit (You might have to press twice)")
+    print("------------------------------------------------------------------------------------------------------------------------")
+    print("Current Build: 0.2.7")
     print("------------------------------------------------------------------------------------------------------------------------")
     selection = int(input("Select from list: "))
     return selection
@@ -53,12 +54,13 @@ def option(selection):
         sys.exit(-1)
 
 def splashScreen():
-    print("Halo: MCC Rich Presence")
     print("------------------------------------------------------------------------------------------------------------------------")
+    print("Halo: MCC Rich Presence")
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Created by kay-el-zed.")
     print("Maintained by Gurrman375D.")
     print("------------------------------------------------------------------------------------------------------------------------")
+    print("Current Build: 0.2.7")
     print("------------------------------------------------------------------------------------------------------------------------")
     time.sleep(5)
     clear()

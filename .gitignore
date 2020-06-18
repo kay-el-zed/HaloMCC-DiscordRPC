@@ -349,3 +349,6 @@ Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/PKG-00.pkg
 Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/PYZ-00.toc
 Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/warn-Halo_MCC_Rich_Presence.txt
 Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/xref-Halo_MCC_Rich_Presence.html
+*.toc
+*.pyz
+*.manifest

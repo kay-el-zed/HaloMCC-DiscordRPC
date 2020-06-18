@@ -5,8 +5,7 @@ import authenticate, Rich_Presence, removetoken, os, time, xbox, sys, ui
 # Rich_Presence.main()
 # removetoken.main()
 ui.splashScreen()
-selection = ui.UI()
-ui.clear()
+selection = "a"
 while(selection != None or selection != 5):
     selection = ui.UI()
     ui.option(selection)
