@@ -12,7 +12,7 @@ def UI():
     print("2. Launch the Rich Presence (Requires a Token)")
     print("3. Current Xbox Live Status (Requires a Token)")
     print("4. Delete your Token")
-    print("5. Exit")
+    print("5. Exit (You might have to press twice)")
     print("------------------------------------------------------------------------------------------------------------------------")
     selection = int(input("Select from list: "))
     return selection
@@ -20,19 +20,23 @@ def UI():
 def option(selection):
     try:
         if(selection == 1):
+            clear()
             removetoken.createToken()
             authenticate.main()
             clear()
             UI()
         elif(selection == 2):
+            clear()
             Rich_Presence.main()
             clear()
             UI()
         elif(selection == 3):
+            clear()
             Debug.main()
             clear()
             UI()
         elif(selection == 4):
+            clear()
             removetoken.main()
             clear()
             UI()
