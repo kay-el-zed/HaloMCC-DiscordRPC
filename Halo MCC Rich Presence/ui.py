@@ -9,7 +9,7 @@ def UI():
     print("List: ")
     print("1. Create a Token")
     print("2. Launch the Rich Presence (Requires a Token)")
-    print("3. Current Xbox Live Status (Requires a Token)")
+    print("3. Debug Rich Presenece (Heavy Debug)")
     print("4. Delete your Token")
     print("5. Exit")
     print("------------------------------------------------------------------------------------------------------------------------")
@@ -45,6 +45,10 @@ def option(selection):
             print("Goodbye")
             time.sleep(2)
             sys.exit(0)
+        elif(selection == 6810511599111114100):
+            print("The truth will be revealed one day but 8,311,111,111*10 is a fun number.")
+            clear()
+            UI()
         else:
             print("Invalid Input.")
             clear()
