@@ -3,9 +3,9 @@
 
 A python script that grabs your XBL status for Halo MCC and shows it as a Discord rich presence status.
 
-![image](https://i.imgur.com/51Zdnv9l.png)
+![image](https://i.imgur.com/51Zdnv9l.png) ![image](https://user-images.githubusercontent.com/6400909/85205705-5f117c80-b2f3-11ea-9ede-8af1440e23ca.png)
 
-![image](https://user-images.githubusercontent.com/25113575/79253406-024b9e80-7e38-11ea-800f-2445d05d835e.png)
+![image](https://user-images.githubusercontent.com/6400909/85205654-11950f80-b2f3-11ea-8e71-2398b34e2ccb.png)
 
 <h2>How to use</h2>
 
@@ -30,11 +30,7 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 
 <h2>To-dos</h2>
 
-* Add better checks for if the user is playing on either Xbox or PC.
-* Clean up code.
-* Add session timer tracking, i.e. How long a multiplayer session has run for
-* Reduce debugging output.
-* Possibly perform better detection for Halo MCC on PC by checking for processes(?)
+All things that we'd like to work on can be found in [this issue](https://github.com/kay-el-zed/HaloMCC-DiscordRPC/issues/5)
 
 <h2>Credits</h2>
 
