@@ -349,3 +349,13 @@ Halo MCC Rich Presence/dist/Halo_MCC_Rich_Presence(Release).zip
 Halo MCC Rich Presence/Halo_MCC_Rich_Presence(User Friendly).zip
 tokens.json
 .vscode/settings.json
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/Analysis-00.toc
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/base_library.zip
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/EXE-00.toc
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/PKG-00.pkg
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/PYZ-00.toc
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/warn-Halo_MCC_Rich_Presence.txt
+Halo MCC Rich Presence/build/Halo_MCC_Rich_Presence/xref-Halo_MCC_Rich_Presence.html
+*.toc
+*.pyz
+*.manifest

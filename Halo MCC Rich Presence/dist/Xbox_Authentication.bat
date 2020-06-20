@@ -1,1 +1,0 @@
-cd %LocalAppData%\OpenXbox\xbox && xbox-authenticate --tokens tokens.json
