@@ -2,6 +2,7 @@ import authenticate, Rich_Presence, removetoken, os, time, xbox, sys, ui, Debug
 from os import system, name
 os.system('color 2')
 
+# UI strings that tell the user what to do
 def UI():
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Halo: MCC Rich Presence")
@@ -18,6 +19,7 @@ def UI():
     selection = int(input("Select from list: "))
     return selection
 
+# Conditional Tree for UI
 def option(selection):
     try:
         if(selection == 1):
@@ -57,6 +59,7 @@ def option(selection):
         print(e)
         sys.exit(-1)
 
+# The splash screen that you see when the program opens.
 def splashScreen():
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Halo: MCC Rich Presence")
@@ -69,6 +72,7 @@ def splashScreen():
     time.sleep(5)
     clear()
 
+# This clears all the outputed strings within the console.
 def clear(): 
     if name == 'nt': 
         _ = system('cls') 
