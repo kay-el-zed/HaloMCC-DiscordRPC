@@ -15,6 +15,7 @@ def UI():
     print("5. Exit")
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Current Build: 0.2.7")
+    print("Current issue might require you to type a number hit enter and repeat.")
     print("------------------------------------------------------------------------------------------------------------------------")
     selection = int(input("Select from list: "))
     return selection
@@ -24,7 +25,6 @@ def option(selection):
     try:
         if(selection == 1):
             clear()
-            removetoken.createToken()
             authenticate.main()
             clear()
             UI()
@@ -34,8 +34,10 @@ def option(selection):
             clear()
             UI()
         elif(selection == 3):
-            clear()
-            Debug.main()
+            # clear()
+            # Debug.main()
+            print("Under construction. Please report on GitHub.")
+            time.sleep(5)
             clear()
             UI()
         elif(selection == 4):
@@ -55,6 +57,7 @@ def option(selection):
             print("Invalid Input.")
             clear()
             UI()
+            return selection
     except Exception as e:
         print(e)
         sys.exit(-1)
