@@ -60,7 +60,7 @@ async function richPresence(username, password){
 }
 richPresence(args.u, args.p);
 
-/**'thisis1969@outlook.com' 'gurrman3750492'
+/**
  * 
     steamid: "76561198293744031",
     gameid: "976730",
