@@ -4,6 +4,7 @@ from os import sys
 from time import time, sleep
 from pypresence import Presence
 from getpass import getpass
+from additional import application_path, clear
 
 def request(username:str, password:str, xuid:str, application_path):
     """Generates a request in a terminal to receive the presence data
@@ -18,30 +19,36 @@ def request(username:str, password:str, xuid:str, application_path):
     return
 
 def main():
+    """The main code need for the presence app to run
+    """
     client_id = '700853075023233024'
     RPC = Presence(client_id)
     RPC.connect()
     browsingStamp = time()
-        
-    if(readCredentials() == False or readCredentials()['email'] == ""):
-        UserName = str(input("Email: "))
-        Password = getpass()
-        print("Get Xuid from https://www.cxkes.me/xbox/xuid. Make sure to select decimal.")
-        xuid = str(input("Xuid: "))
-        Credentials = {
-            "email": UserName,
-            "xuid": xuid
-        }
-        with open(application_path() + '\\credentials.json', 'w') as f:
-            json.dump(Credentials, f)
-        
-    else:
-        Password = getpass()
-        UserName = readCredentials()['email']
-        xuid = readCredentials()['xuid']
-    # Gamer tags with # can just be removed
-    
-    sleep(5)
+    try:   
+        if(readCredentials() == False or readCredentials()['email'] == ""):
+            UserName = str(input("Email: "))
+            Password = getpass()
+            print("Get Xuid from https://www.cxkes.me/xbox/xuid. Make sure to select decimal.")
+            xuid = str(input("Xuid: "))
+            Credentials = {
+                "email": UserName,
+                "xuid": xuid
+            }
+            with open(application_path() + '\\credentials.json', 'w') as f:
+                json.dump(Credentials, f, indent=2)
+            
+        else:
+            Password = getpass()
+            UserName = readCredentials()['email']
+            xuid = readCredentials()['xuid']
+        # Gamer tags with # can just be removed
+        clear()
+        sleep(2)
+    except Exception as e:
+        print(e)
+        sleep(2)
+        sys.exit()
     
     while True:
         try:
@@ -49,8 +56,10 @@ def main():
             if(readPresence() != None):
                 rpc(RPC, "large", readPresence()['game'], "small", "Windows", readPresence()['state'],readPresence()['details'], browsingStamp)
             sleep(7)
-        except Exception as e:
+            clear()
+        except KeyboardInterrupt or ValueError as e:
             print(e)
+            RPC.close()
             sys.exit()
     
 
@@ -103,25 +112,11 @@ def rpc(rpc:object, li:str, lt:str, si:str, st:str, state:str, details:str, star
             details=details,
             start=startTimestamp
         )
-    except Exception as e:
+    except KeyboardInterrupt or Exception as e:
         print(e)
         rpc.close()
         sys.exit()
 
-def application_path():
-    """Get's the current application path
-
-    Returns:
-        string: Retruns current application path
-    """
-    if getattr(sys, 'frozen', False):
-    # If the application is run as a bundle, the PyInstaller bootloader
-    # extends the sys module by a flag frozen=True and sets the app 
-    # path into variable _MEIPASS'.
-        application_path = os.path.dirname(sys.argv[0])
-    else:
-        application_path = os.path.dirname(os.path.abspath(__file__))
-    return application_path
 
 if __name__ == '__main__':
     try:
@@ -130,5 +125,6 @@ if __name__ == '__main__':
         print(e)
         print("Check to make sure discord and Halo Master Chief Collection are running.")
         sleep(5)
+        rpc.close()
         sys.exit()
         
