@@ -5,7 +5,8 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 
 ![image](https://i.imgur.com/51Zdnv9l.png)
 
-![image](https://user-images.githubusercontent.com/25113575/79253406-024b9e80-7e38-11ea-800f-2445d05d835e.png)
+![image](https://user-images.githubusercontent.com/25113575/118538638-509a3380-b703-11eb-8714-63601a201dc9.png)
+
 
 <h2>How to use</h2>
 
@@ -22,10 +23,13 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 <h2>Requirements for Building</h2>
 
 * [pypresence](https://github.com/qwertyquerty/pypresence)
-* [xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python)
+* [xboxlive-api](https://github.com/XboxReplay/xboxlive-api)
+* [xboxlive-auth](https://github.com/XboxReplay/xboxlive-auth/tree/4.0.0)
 * A client ID for an application created in the [Discord developer portal](https://discordapp.com/developers) 
 * Sample images for 'cover' and 'win10' as shown above are provided for creating your own application.
 * [pyinstaller](https://www.pyinstaller.org/downloads.html) for building the executable.
+* [nodejs](https://nodejs.org/en/download/)
+* [python](https://www.python.org/downloads/)
 
 
 <h2>To-dos</h2>
@@ -40,6 +44,6 @@ A python script that grabs your XBL status for Halo MCC and shows it as a Discor
 
 <b>[pypresence](https://github.com/qwertyquerty/pypresence)</b> - Written by: [qwertyquerty](https://github.com/qwertyquerty) and [LewdNeko](https://github.com/lewdneko) Notable Contributors: [GiovanniMCMXCIX](https://github.com/GiovanniMCMXCIX), [GhostofGoes](https://github.com/GhostofGoes)
 
-<b>[xbox-webapi-python](https://github.com/openxbox/xbox-webapi-python)</b> - uses parts of [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) project template. The authentication code is based on [joealcorn/xbox](https://github.com/joealcorn/xbox)
+<b>[XboxReplay](https://github.com/XboxReplay)</b> - Written by: [Alexis ize](https://github.com/Alexis-Bize)
 
 <b>[Gurrman375](https://github.com/Gurrman375)</b> - Major contributor to the repo. Most of the commits come from them.
