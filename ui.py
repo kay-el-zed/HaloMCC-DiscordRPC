@@ -12,12 +12,21 @@ def optionUI():
         option(UI())
 
 def option(selection):
+    """Selction based on the number you chose. Look at list to modify.
+
+    Args:
+        selection (int): Runs lines of code based on a conditional
+
+    Returns:
+        [void]: Doesn't return anything. Just here in case errors.
+    """
     if(selection == 1):
         print("Run the command 'Ctrl C' to return to the menu.")
         print("Loading Code ...")
         sleep(2)
         clear()
         richpresence.main()
+        
     elif(selection == 2):
         with open(richpresence.application_path() + "\\credentials.json", 'w') as f:
             Credentials = {
@@ -37,6 +46,7 @@ def option(selection):
         sleep(2)
         clear()
         optionUI()
+        
     elif(selection == 3):
         sys.exit()
     else:
@@ -46,6 +56,11 @@ def option(selection):
         optionUI()
         
 def UI():
+    """Main graphics ui. Currently it is a terminal UI.
+
+    Returns:
+        [void]: Doesn't return anything. Here in case errors.
+    """
     system('color 2')
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Halo: MCC Rich Presence")
@@ -55,12 +70,14 @@ def UI():
     print("2. Delete your Credentials")
     print("3. Exit")
     print("------------------------------------------------------------------------------------------------------------------------")
-    print("Current Build: 0.3.0")
+    print("Current Build: 0.3.1")
     print("------------------------------------------------------------------------------------------------------------------------")
     selection = int(input("Select from list: "))
     return selection
 
 def splashScreen():
+    """Creates a Screen to show the devs and other program info.
+    """
     clear()
     print("------------------------------------------------------------------------------------------------------------------------")
     print("Halo: MCC Rich Presence")
@@ -68,7 +85,7 @@ def splashScreen():
     print("Created by kay-el-zed, Gurrman375D.")
     print("Maintained by Gurrman375D.")
     print("------------------------------------------------------------------------------------------------------------------------")
-    print("Current Build: 0.3.0")
+    print("Current Build: 0.3.1")
     print("------------------------------------------------------------------------------------------------------------------------")
     sleep(5)
     clear()
