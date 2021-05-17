@@ -17,3 +17,6 @@ dist/richpresence.exe
 *.spec
 richpresence.spec
 richpresence.spec
+dist/credentials.json
+dist/rpc.json
+richpresence.spec
