@@ -6,6 +6,14 @@ from pypresence import Presence
 from getpass import getpass
 
 def request(username:str, password:str, xuid:str, application_path):
+    """Generates a request in a terminal to receive the presence data
+
+    Args:
+        username (str): The email of the user
+        password (str): The password of the user
+        xuid (str): The id of the xbox user
+        application_path ([type]): The path of where the .exe or script is located.
+    """
     os.system(application_path + "\\node-v14.17.0-win-x64\\node.exe " + application_path + "\\richpresence.js --u " + username + " --p " + password + " --xuid " + xuid)
     return
 
@@ -47,6 +55,11 @@ def main():
     
 
 def readPresence():
+    """Reads current presence data from rpc.json.
+
+    Returns:
+        JSON: Returns json from rpc.json or False.
+    """
     with open(application_path() + '\\rpc.json') as f:
         data = json.load(f)
     if(data != None):
@@ -55,6 +68,11 @@ def readPresence():
         return None
     
 def readCredentials():
+    """Reads credentials if any are set in .
+
+    Returns:
+        JSON: Returns JSON from credentials.json or False.
+    """
     with open('credentials.json') as f:
         data = json.load(f)
     if(data != None):
@@ -91,6 +109,11 @@ def rpc(rpc:object, li:str, lt:str, si:str, st:str, state:str, details:str, star
         sys.exit()
 
 def application_path():
+    """Get's the current application path
+
+    Returns:
+        string: Retruns current application path
+    """
     if getattr(sys, 'frozen', False):
     # If the application is run as a bundle, the PyInstaller bootloader
     # extends the sys module by a flag frozen=True and sets the app 
