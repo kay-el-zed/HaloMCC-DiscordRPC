@@ -1,7 +1,8 @@
 const { authenticate, xbl } = require('@xboxreplay/xboxlive-auth');
-const { call, getPlayerXUID } = require('@xboxreplay/xboxlive-api');
-const { writeFileSync } = require('fs');
+const { call } = require('@xboxreplay/xboxlive-api');
+const { writeFileSync, readFileSync } = require('fs');
 const args = require('yargs').argv;
+const { option } = require('yargs');
 let config, response, deviceDetails;
 
 const nullactivity = {
@@ -11,26 +12,23 @@ const nullactivity = {
   game: ""
 };
 
-const jsonfile = __dirname + '/rpc.json';
+const jsonfile = __dirname + '\\rpc.json';
 
-async function richPresence(username, password){
-  const XBLContractVersion = 1;
+
+async function richPresence(){
   // Get Xbox credentials 
-  const { Token: deviceToken } = await xbl.EXPERIMENTAL_createDummyWin32DeviceToken();
-  const { user_hash, xsts_token } = await authenticate(username, password, {
-    deviceToken
-  });
-  const userID = args.xuid;
+  const data = JSON.parse(readFileSync((__dirname + "/tokens/xtoken.json")));
+  const authorization = {
+    userHash: data['DisplayClaims']['xui'][0]['uhs'],
+    XSTSToken: data['Token'], 
+    xuid: data['DisplayClaims']['xui'][0]['xid']
+  };
   config = {
-    url: `https://peoplehub.xboxlive.com/users/me/people/xuids(${userID})/decoration/presenceDetail`,
+    url: `https://peoplehub.xboxlive.com/users/me/people/xuids(${authorization.xuid})/decoration/presenceDetail`,
     method: 'GET'
   };
-  const authorization = {
-    userHash: user_hash,
-    XSTSToken: xsts_token
-  };
   try{
-    response = await call(config, authorization, XBLContractVersion);
+    response = await call(config, authorization, 1);
 
     // Presence info
     let presenceText = response['people'][0]['presenceDetails'], device;
@@ -61,7 +59,8 @@ async function richPresence(username, password){
             writeFileSync(jsonfile, JSON.stringify(activity, null, 2));
           }
           catch(err){
-            console.log("Unable to write to file. Check to make sure all data entered is correct.")
+            console.log("Unable to write to file. Check to make sure all data entered is correct.");
+            console.log("Check that this file exists " + jsonfile);
           }
         }
         i += 1;
@@ -75,32 +74,16 @@ async function richPresence(username, password){
   }
     return;
 }
-richPresence(args.u, args.p);
+richPresence();
 
 /**
  * args.u, args.p
-    steamid: "76561198293744031",
+    steamid: "",
     gameid: "976730",
-    lobbysteamid: "109775241013106433"
+    lobbysteamid: ""
     steam://joinlobby/
     976730/                             <------ Game ID
-    109775241013106433/                 <------ Lobby ID
-    76561198293744031                   <------ Steam ID
+    lobbysteamid/                       <------ Lobby ID
+    steamid                             <------ Steam ID
     80EC429274AF252714363656B71562C0    <------ API Key
  */
-
-//   const defaultData = {
-//      "details": null,
-//      "state": null,
-//      "assets":{
-//          "largeImageKey": null,
-//          "largeImageText": null,
-//          "smallImageKey": null,
-//          "smallImageText": null
-//      }
-//    }
-//  }
-  
-  // fs.writeFile("./rpc.json", JSON.stringify(defaultData), err => {
-  //   if (err) console.log('Error writing file:', err)
-  // });

@@ -1,7 +1,8 @@
-import richpresence, json
+import richpresence, json, ctypes
 from time import sleep
-from os import system, name, sys
-from additional import clear
+from os import system, name, sys, path
+from additional import application_path, clear
+import auth, shutil
 
 def main():
     splashScreen()
@@ -21,20 +22,18 @@ def option(selection):
         [void]: Doesn't return anything. Just here in case errors.
     """
     if(selection == 1):
+        clear()
+        auth.main()
+        optionUI()
+    elif(selection == 2):
         print("Run the command 'Ctrl C' to return to the menu.")
         print("Loading Code ...")
         sleep(2)
         clear()
         richpresence.main()
-        
-    elif(selection == 2):
-        with open(richpresence.application_path() + "\\credentials.json", 'w') as f:
-            Credentials = {
-                "email": "",
-                "xuid": ""
-            }
-            json.dump(Credentials, f, indent=2)
-        
+    elif(selection == 3):
+        if(path.isdir(application_path() + "\\tokens") == True):
+            shutil.rmtree(application_path() + "\\tokens")
         with open(richpresence.application_path() + "\\rpc.json", 'w') as j:
             rpc = {
                 "details": "",
@@ -45,9 +44,8 @@ def option(selection):
             json.dump(rpc, j, indent=2)
         sleep(2)
         clear()
-        optionUI()
-        
-    elif(selection == 3):
+        optionUI()    
+    elif(selection == 4):
         sys.exit()
     else:
         print("WIP")
@@ -66,11 +64,12 @@ def UI():
     print("Halo: MCC Rich Presence")
     print("------------------------------------------------------------------------------------------------------------------------")
     print("List: ")
-    print("1. Launch the Rich Presence (Requires Email, Password, and XUID)")
-    print("2. Delete your Credentials")
-    print("3. Exit")
+    print('1. Sign in using Oauth 2.0 (Requires you to save a link that looks like "https://localhost/oauth_success?code=M.R3_BAY.<code>")')
+    print("2. Launch the Rich Presence (Requires /tokens folder)")
+    print("3. Delete your Credentials")
+    print("4. Exit")
     print("------------------------------------------------------------------------------------------------------------------------")
-    print("Current Build: 0.3.1")
+    print("Current Build: 0.3.2")
     print("------------------------------------------------------------------------------------------------------------------------")
     selection = int(input("Select from list: "))
     return selection
@@ -85,7 +84,7 @@ def splashScreen():
     print("Created by kay-el-zed, Gurrman375D.")
     print("Maintained by Gurrman375D.")
     print("------------------------------------------------------------------------------------------------------------------------")
-    print("Current Build: 0.3.1")
+    print("Current Build: 0.3.2")
     print("------------------------------------------------------------------------------------------------------------------------")
     sleep(5)
     clear()
@@ -94,6 +93,7 @@ def splashScreen():
 if __name__ == "__main__":
     system('color 2')
     try:
+        ctypes.windll.kernel32.SetConsoleTitleW("Halo Master Chief Collection Rich Presence")
         main()
     except KeyboardInterrupt as e:
         print(e)

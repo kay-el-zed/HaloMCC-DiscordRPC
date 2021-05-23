@@ -1,12 +1,13 @@
 import json
-import os
-from os import sys
+from os import sys, path, system
 from time import time, sleep
 from pypresence import Presence
 from getpass import getpass
 from additional import application_path, clear
+import auth
 
-def request(username:str, password:str, xuid:str, application_path):
+
+def request(application_path):
     """Generates a request in a terminal to receive the presence data
 
     Args:
@@ -15,46 +16,40 @@ def request(username:str, password:str, xuid:str, application_path):
         xuid (str): The id of the xbox user
         application_path ([type]): The path of where the .exe or script is located.
     """
-    os.system(application_path + "\\node-v14.17.0-win-x64\\node.exe " + application_path + "\\richpresence.js --u " + username + " --p " + password + " --xuid " + xuid)
+    system(application_path + "\\node-v14.17.0-win-x64\\node.exe " + application_path + "\\richpresence.js")
     return
 
 def main():
     """The main code need for the presence app to run
     """
     client_id = '700853075023233024'
-    RPC = Presence(client_id)
-    RPC.connect()
-    browsingStamp = time()
-    try:   
-        if(readCredentials() == False or readCredentials()['email'] == ""):
-            UserName = str(input("Email: "))
-            Password = getpass()
-            print("Get Xuid from https://www.cxkes.me/xbox/xuid. Make sure to select decimal.")
-            xuid = str(input("Xuid: "))
-            Credentials = {
-                "email": UserName,
-                "xuid": xuid
-            }
-            with open(application_path() + '\\credentials.json', 'w') as f:
-                json.dump(Credentials, f, indent=2)
-            
-        else:
-            Password = getpass()
-            UserName = readCredentials()['email']
-            xuid = readCredentials()['xuid']
-        # Gamer tags with # can just be removed
-        clear()
-        sleep(2)
-    except Exception as e:
+    try:
+        RPC = Presence(client_id)
+        RPC.connect()
+        browsingStamp = time()
+    except FileNotFoundError as e:
+        print("Discord is not currently running")
         print(e)
-        sleep(2)
-        sys.exit()
-    
+    if(path.isfile(application_path() + '\\rpc.json') != True):
+        open("rpc.json", "x")
+        
+    with open("rpc.json", "w") as f:
+        activity = {
+            "details": "",
+            "state": "",
+            "device": "",
+            "game": ""
+        }
+        f.write(json.dumps(activity))
+        
     while True:
+        auth.main()
         try:
-            request(UserName, Password, xuid, application_path())
-            if(readPresence() != None):
+            request(application_path())
+            if(readPresence() != False and readPresence()['game'] != ""):
                 rpc(RPC, "large", readPresence()['game'], "small", "Windows", readPresence()['state'],readPresence()['details'], browsingStamp)
+            else:
+                print("Waiting for Halo Master Chief Collection to start.")
             sleep(7)
             clear()
         except KeyboardInterrupt or ValueError as e:
@@ -69,25 +64,17 @@ def readPresence():
     Returns:
         JSON: Returns json from rpc.json or False.
     """
-    with open(application_path() + '\\rpc.json') as f:
-        data = json.load(f)
-    if(data != None):
-        return data
-    else:
-        return None
-    
-def readCredentials():
-    """Reads credentials if any are set in .
+    if(path.exists(application_path() + '\\rpc.json')):
+        with open(application_path() + '\\rpc.json') as f:
+            data = json.load(f)
 
-    Returns:
-        JSON: Returns JSON from credentials.json or False.
-    """
-    with open('credentials.json') as f:
-        data = json.load(f)
-    if(data != None):
-        return data
+        if(data != None):
+            return data
+        else:
+            return None
     else:
         return False
+
     
 def rpc(rpc:object, li:str, lt:str, si:str, st:str, state:str, details:str, startTimestamp:float):
     """Creates a rich presence setting. Will continuouls go on till an error occurs
@@ -115,7 +102,7 @@ def rpc(rpc:object, li:str, lt:str, si:str, st:str, state:str, details:str, star
     except KeyboardInterrupt or Exception as e:
         print(e)
         rpc.close()
-        sys.exit()
+        exit()
 
 
 if __name__ == '__main__':
@@ -125,6 +112,9 @@ if __name__ == '__main__':
         print(e)
         print("Check to make sure discord and Halo Master Chief Collection are running.")
         sleep(5)
-        rpc.close()
-        sys.exit()
+        try:
+            rpc.close()
+        except Exception as f:
+            print("Rich Presence client either never started or can't be shut down.")
+        exit()
         

@@ -41,3 +41,5 @@ credentials.json
 dist/credentials.json
 *.json
 __pycache__/additional.cpython-37.pyc
+dist/HaloMCCRPC.zip
+richpresence.spec
