@@ -42,11 +42,13 @@ async function richPresence(){
       let j;
       while(i < presenceText.length){
         console.log(response['people'][0]['presenceDetails'][i]);
-        if(response['people'][0]['presenceDetails'][i]['Device'] == "Win32"){
-          j = i;
+        if((response['people'][0]['presenceDetails'][i]['PresenceText'].startsWith("Halo: The Master Chief Collection -"))){
+
+          presenceText = response['people'][0]['presenceDetails'][i]['PresenceText'].split(" - ");
+          console.log(presenceText);
+          device = response['people'][0]['presenceDetails'][i]['Device'];
+          
           i = presenceText.length;
-          presenceText = response['people'][0]['presenceDetails'][j]['PresenceText'].split(" - ");
-          device = response['people'][0]['presenceDetails'][j]['Device'];
 
           const activity = {
             details: presenceText[2],

@@ -26,11 +26,12 @@ def option(selection):
         auth.main()
         optionUI()
     elif(selection == 2):
-        print("Run the command 'Ctrl C' to return to the menu.")
+        print("Run the command 'Ctrl C' to exit the program.")
         print("Loading Code ...")
         sleep(2)
         clear()
         richpresence.main()
+        optionUI()
     elif(selection == 3):
         if(path.isdir(application_path() + "\\tokens") == True):
             shutil.rmtree(application_path() + "\\tokens")

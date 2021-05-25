@@ -1,8 +1,5 @@
-const { authenticate, xbl } = require('@xboxreplay/xboxlive-auth');
 const { call } = require('@xboxreplay/xboxlive-api');
 const { writeFileSync, readFileSync } = require('fs');
-const args = require('yargs').argv;
-const { option } = require('yargs');
 let config, response, deviceDetails;
 
 const nullactivity = {
@@ -12,7 +9,7 @@ const nullactivity = {
   game: ""
 };
 
-const jsonfile = __dirname + '\\rpc.json';
+const jsonfile = __dirname + '/rpc.json';
 
 
 async function richPresence(){
@@ -39,14 +36,15 @@ async function richPresence(){
     }
     else if(presenceText){
       i = 0;
-      let j;
       while(i < presenceText.length){
         console.log(response['people'][0]['presenceDetails'][i]);
-        if(response['people'][0]['presenceDetails'][i]['Device'] == "Win32"){
-          j = i;
+        if((response['people'][0]['presenceDetails'][i]['PresenceText'].startsWith("Halo: The Master Chief Collection -"))){
+
+          presenceText = response['people'][0]['presenceDetails'][i]['PresenceText'].split(" - ");
+          console.log(presenceText);
+          device = response['people'][0]['presenceDetails'][i]['Device'];
+          
           i = presenceText.length;
-          presenceText = response['people'][0]['presenceDetails'][j]['PresenceText'].split(" - ");
-          device = response['people'][0]['presenceDetails'][j]['Device'];
 
           const activity = {
             details: presenceText[2],
@@ -59,8 +57,8 @@ async function richPresence(){
             writeFileSync(jsonfile, JSON.stringify(activity, null, 2));
           }
           catch(err){
-            console.log("Unable to write to file. Check to make sure all data entered is correct.");
-            console.log("Check that this file exists " + jsonfile);
+            console.log("Unable to write to file. Check to make sure all data entered is correct.")
+            console.log(err)
           }
         }
         i += 1;
