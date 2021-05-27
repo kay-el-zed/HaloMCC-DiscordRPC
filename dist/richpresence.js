@@ -75,15 +75,3 @@ async function richPresence(){
     return;
 }
 richPresence();
-
-/**
- * args.u, args.p
-    steamid: "",
-    gameid: "976730",
-    lobbysteamid: ""
-    steam://joinlobby/
-    976730/                             <------ Game ID
-    lobbysteamid/                       <------ Lobby ID
-    steamid                             <------ Steam ID
-    80EC429274AF252714363656B71562C0    <------ API Key
- */
