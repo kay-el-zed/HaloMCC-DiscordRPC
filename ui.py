@@ -1,8 +1,7 @@
-import richpresence, json, ctypes
+import json, ctypes, auth, shutil, richpresence 
 from time import sleep
 from os import system, name, sys, path
 from additional import application_path, clear
-import auth, shutil
 
 def main():
     splashScreen()
@@ -30,8 +29,7 @@ def option(selection):
         print("Loading Code ...")
         sleep(2)
         clear()
-        richpresence.main()
-        optionUI()
+        richpresence.richpresence()
     elif(selection == 3):
         if(path.isdir(application_path() + "\\tokens") == True):
             shutil.rmtree(application_path() + "\\tokens")
