@@ -1,0 +1,11 @@
+{
+  "name": "projectcontrolroom",
+  "version": "1.0.0",
+  "description": "A rich presence client that allows you to show your halo experineces via discord.",
+  "dependencies": {
+    "@xboxreplay/xboxlive-api": "^3.4.3"
+  },
+  "scripts": {
+    "start": "npm install @xboxreplay/xboxlive-api"
+  }
+}
