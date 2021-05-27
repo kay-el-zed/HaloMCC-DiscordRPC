@@ -3,28 +3,32 @@
 
 A python script that grabs your XBL status for Halo MCC and shows it as a Discord rich presence status.
 
-![image](https://i.imgur.com/51Zdnv9l.png)
+![image](https://user-images.githubusercontent.com/25113575/119899512-07629480-bef8-11eb-949b-cb5b6ad568d7.png)
 
-![image](https://user-images.githubusercontent.com/25113575/118538638-509a3380-b703-11eb-8714-63601a201dc9.png)
-
+![image](https://user-images.githubusercontent.com/25113575/119900126-ec445480-bef8-11eb-9f87-82e376668f27.png)
 
 <h2>How to use</h2>
 
-1. Install both requirements using pip
-2. Update discord_client_id with your valid application's client ID from the [Discord developer portal](https://discordapp.com/developers).  
+Running the Presence:
+Run Step 1:
+![image](https://user-images.githubusercontent.com/25113575/119243523-51c0cb80-bb1c-11eb-9369-6b0772a0156b.png)
 
-3. Run the latest [release](https://github.com/kay-el-zed/HaloMCC-DiscordRPC/releases). 
+Login and agree to the app getting your data:
+![image](https://user-images.githubusercontent.com/25113575/119243543-8cc2ff00-bb1c-11eb-8b4e-e0762584d05e.png)
 
-	
-	1. Input your xbox sign on account. (Data is stored in AppData/Local/OpenXbox/xbox)
- 	2. When prompted, enter your valid application's CID(client ID) from the [Discord developer portal](https://discord.com/developers/applications), along with a small and large image. (If you don't know how to do this, leave the option blank and default settings will be used.)
- 	3. It will wait until it sees Halo MCC in your Xbox Live presence to display a rich status on Discord.
+Copy the link you get:
+![image](https://user-images.githubusercontent.com/25113575/119243561-bed46100-bb1c-11eb-8414-1cb560f79f0c.png)
+
+Enter the link in the prompt (The links expire quickly):
+![image](https://user-images.githubusercontent.com/25113575/119243702-2b9c2b00-bb1e-11eb-9ae8-eaee95f0a77b.png)
+
+Launch the Rich Presence and enjoy:
+![image](https://user-images.githubusercontent.com/25113575/119906785-bbb5e800-bf03-11eb-963a-1a74b833a724.png)
 
 <h2>Requirements for Building</h2>
 
 * [pypresence](https://github.com/qwertyquerty/pypresence)
 * [xboxlive-api](https://github.com/XboxReplay/xboxlive-api)
-* [xboxlive-auth](https://github.com/XboxReplay/xboxlive-auth/tree/4.0.0)
 * A client ID for an application created in the [Discord developer portal](https://discordapp.com/developers) 
 * Sample images for 'cover' and 'win10' as shown above are provided for creating your own application.
 * [pyinstaller](https://www.pyinstaller.org/downloads.html) for building the executable.
