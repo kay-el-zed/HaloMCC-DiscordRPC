@@ -1,8 +1,7 @@
-import richpresence, json, ctypes
+import json, ctypes, auth, shutil, richpresence 
 from time import sleep
 from os import system, name, sys, path
 from additional import application_path, clear
-import auth, shutil
 
 def main():
     splashScreen()
@@ -30,8 +29,7 @@ def option(selection):
         print("Loading Code ...")
         sleep(2)
         clear()
-        richpresence.main()
-        optionUI()
+        richpresence.richpresence()
     elif(selection == 3):
         if(path.isdir(application_path() + "\\tokens") == True):
             shutil.rmtree(application_path() + "\\tokens")
@@ -70,7 +68,7 @@ def UI():
     print("3. Delete your Credentials")
     print("4. Exit")
     print("------------------------------------------------------------------------------------------------------------------------")
-    print("Current Build: 0.3.2")
+    print("Current Build: 0.3.3")
     print("------------------------------------------------------------------------------------------------------------------------")
     selection = int(input("Select from list: "))
     return selection
@@ -85,7 +83,7 @@ def splashScreen():
     print("Created by kay-el-zed, Gurrman375D.")
     print("Maintained by Gurrman375D.")
     print("------------------------------------------------------------------------------------------------------------------------")
-    print("Current Build: 0.3.2")
+    print("Current Build: 0.3.3")
     print("------------------------------------------------------------------------------------------------------------------------")
     sleep(5)
     clear()

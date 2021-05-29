@@ -1,1 +1,0 @@
-pyinstaller  --onefile --icon=Images/halo.ico -F Debug.py

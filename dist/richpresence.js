@@ -1,6 +1,6 @@
 const { call } = require('@xboxreplay/xboxlive-api');
 const { writeFileSync, readFileSync } = require('fs');
-let config, response, deviceDetails;
+let config, response;
 
 const nullactivity = {
   details: "",
@@ -15,6 +15,7 @@ const jsonfile = __dirname + '/rpc.json';
 async function richPresence(){
   // Get Xbox credentials 
   const data = JSON.parse(readFileSync((__dirname + "/tokens/xtoken.json")));
+  const steamid = JSON.parse(readFileSync((__dirname + "/rpc.json")))
   const authorization = {
     userHash: data['DisplayClaims']['xui'][0]['uhs'],
     XSTSToken: data['Token'], 
@@ -41,7 +42,7 @@ async function richPresence(){
         if((response['people'][0]['presenceDetails'][i]['PresenceText'].startsWith("Halo: The Master Chief Collection -"))){
 
           presenceText = response['people'][0]['presenceDetails'][i]['PresenceText'].split(" - ");
-          console.log(presenceText);
+          //console.log(presenceText);
           device = response['people'][0]['presenceDetails'][i]['Device'];
           
           i = presenceText.length;
@@ -50,9 +51,10 @@ async function richPresence(){
             details: presenceText[2],
             state: presenceText[1],
             device: device,
-            game: presenceText[0]
+            game: presenceText[0],
+            steamid: steamid['steamid']
           };
-          console.log(activity);
+          console.log("\nDiscord Status is: \n" + JSON.stringify(activity, null, 2));
           try{
             writeFileSync(jsonfile, JSON.stringify(activity, null, 2));
           }
@@ -73,15 +75,3 @@ async function richPresence(){
     return;
 }
 richPresence();
-
-/**
- * args.u, args.p
-    steamid: "",
-    gameid: "976730",
-    lobbysteamid: ""
-    steam://joinlobby/
-    976730/                             <------ Game ID
-    lobbysteamid/                       <------ Lobby ID
-    steamid                             <------ Steam ID
-    80EC429274AF252714363656B71562C0    <------ API Key
- */
