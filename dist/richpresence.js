@@ -6,7 +6,8 @@ const nullactivity = {
   details: "",
   state: "",
   device: "",
-  game: ""
+  game: "",
+  steamid: ""
 };
 
 const jsonfile = __dirname + '/rpc.json';
@@ -52,7 +53,7 @@ async function richPresence(){
             state: presenceText[1],
             device: device,
             game: presenceText[0],
-            steamid: steamid['steamid']
+            steamid: (steamid['steamid'] || "")
           };
           console.log("\nDiscord Status is: \n" + JSON.stringify(activity, null, 2));
           try{

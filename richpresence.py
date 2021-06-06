@@ -11,12 +11,13 @@ def request(application_path):
     Args:
         application_path (str): The path of where the .exe or script is located.
     """
-    system(application_path + "\\node-v14.17.0-win-x64\\node.exe " + application_path + "\\richpresence.js")
+    system((application_path + "\\node-v14.17.0-win-x64\\node.exe " + application_path + "\\richpresence.js"))
     return
 
 def richpresence():
     """The main code need for the presence app to run
     """
+    auth.main()
     if(path.exists(application_path() + '\\rpc.json') != True):
         writejsonfile()
     
@@ -43,31 +44,12 @@ def richpresence():
     
     # Creating steam invite link
     presence = readPresence()
-    if(presence['steamid'] != ""):
-        headers = {'Content-type': 'application/x-www-form-urlencoded'}
-        try:
-            print("Getting steam url code:")
-            r = requests.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80EC429274AF252714363656B71562C0&format=json&steamids=" + presence['steamid'], headers=headers)
-            response = json.loads(r.text)
-            lobbysteamid = response['response']['players'][0]['lobbysteamid']
-            gameid = response['response']['players'][0]['gameid']
-            steam_invite_url = "steam://joinlobby/" + gameid + "/" + lobbysteamid + "/" + presence['steamid']
-            pass
-        except Exception as e:
-            print("Unable to get steam id. Check to make sure Halo is running.")
-            sleep(5)
-            steam_invite_url = None
-            pass
-    else:
-        print("Steam url is None.")
-        steam_invite_url = None
-        pass  
     
     while True:
-        auth.main()
         try:
             request(application_path())
             presence = readPresence()
+            steam_invite_url = steamInviteLink()
             if(presence != False and presence['game'] != ""):
                 if(presence['device'] == "Win32" or presence['device'] == "WindowsOneCore"):
                     if(presence['device'] == "Win32"):
@@ -79,6 +61,9 @@ def richpresence():
                     else:
                         deviceTitle = "Windows"
                         device = "small"
+                elif(presence['device'] == "XboxOne"):
+                    deviceTitle = "Xbox One"
+                    device = "xbox"
                 else:
                     device = "xbox"
                     deviceTitle = "Xbox"
@@ -96,12 +81,12 @@ def richpresence():
                         changedRPC['Else'] = False
                         changedRPC['Halo 3'] = client_id['Halo 3']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(3)[presence['details']], presence['details'], dictionary.jsonDictionary(3)['Halo3'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(3)[presence['details']], presence['details'], dictionary.jsonDictionary(3)['Halo3'], presence['state'], presence['state'], presence['details'], browsingStamp)
                     else:      
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(3)[presence['details']], presence['details'], dictionary.jsonDictionary(3)['Halo3'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(3)[presence['details']], presence['details'], dictionary.jsonDictionary(3)['Halo3'], presence['state'], presence['state'], presence['details'], browsingStamp)                
@@ -119,12 +104,12 @@ def richpresence():
                         changedRPC['Else'] = False
                         changedRPC['Halo 4'] = client_id['Halo 4']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(4)[presence['details']], presence['details'], dictionary.jsonDictionary(4)['Halo4'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(4)[presence['details']], presence['details'], dictionary.jsonDictionary(4)['Halo4'], presence['state'], presence['state'], presence['details'], browsingStamp)                    
                     else: 
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(4)[presence['details']], presence['details'], dictionary.jsonDictionary(4)['Halo4'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(4)[presence['details']], presence['details'], dictionary.jsonDictionary(4)['Halo4'], presence['state'], presence['state'], presence['details'], browsingStamp)                    
@@ -142,12 +127,12 @@ def richpresence():
                         currentRPC.connect()
                         changedRPC['Halo CE'] = client_id['Halo CE']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(1)[presence['details']], presence['details'], dictionary.jsonDictionary(1)['HaloCE'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(1)[presence['details']], presence['details'], dictionary.jsonDictionary(1)['HaloCE'], presence['state'], presence['state'], presence['details'], browsingStamp)
                     else:   
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(1)[presence['details']], presence['details'], dictionary.jsonDictionary(1)['HaloCE'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(1)[presence['details']], presence['details'], dictionary.jsonDictionary(1)['HaloCE'], presence['state'], presence['state'], presence['details'], browsingStamp)
@@ -165,12 +150,12 @@ def richpresence():
                         currentRPC.connect()
                         changedRPC['Halo 2'] = client_id['Halo 2']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Aniversary'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Aniversary']['Halo2A'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Aniversary'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Aniversary']['Halo2A'], presence['state'], presence['state'], presence['details'], browsingStamp)
                     else:   
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Aniversary'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Aniversary']['Halo2A'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Aniversary'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Aniversary']['Halo2A'], presence['state'], presence['state'], presence['details'], browsingStamp)                        
@@ -188,12 +173,12 @@ def richpresence():
                         currentRPC.connect()
                         changedRPC['Halo 2'] = client_id['Halo 2']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Classic'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Classic']['Halo2'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Classic'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Classic']['Halo2'], presence['state'], presence['state'], presence['details'], browsingStamp)
                     else: 
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Classic'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Classic']['Halo2'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(2)['Halo2Classic'][presence['details']], presence['details'], dictionary.jsonDictionary(2)['Halo2Classic']['Halo2'], presence['state'], presence['state'], presence['details'], browsingStamp)                                                   
@@ -210,12 +195,12 @@ def richpresence():
                         currentRPC.connect()
                         changedRPC['Halo R'] = client_id['Halo R']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(0)[presence['details']], presence['details'], dictionary.jsonDictionary(0)['HaloReach'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(0)[presence['details']], presence['details'], dictionary.jsonDictionary(0)['HaloReach'], presence['state'], presence['state'], presence['details'], browsingStamp)
                     else:  
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, dictionary.jsonDictionary(0)[presence['details']], presence['details'], dictionary.jsonDictionary(0)['HaloReach'], presence['state'], presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, dictionary.jsonDictionary(0)[presence['details']], presence['details'], dictionary.jsonDictionary(0)['HaloReach'], presence['state'], presence['state'], presence['details'], browsingStamp)
@@ -231,20 +216,18 @@ def richpresence():
                         currentRPC.connect()
                         changedRPC['Else'] = client_id['main']
                         browsingStamp = timestamp()
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp)
                     else:
-                        if(steam_invite_url):
+                        if(steam_invite_url != ""):
                             rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
                             rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp)
                     
             else:
                 print("Waiting for Halo Master Chief Collection to start.")
-            if(steam_invite_url):
-                print(steam_invite_url)
             sleep(7)
             clear()
         except KeyboardInterrupt or ValueError as e:
@@ -337,11 +320,45 @@ def writejsonfile():
             "state": "",
             "device": "",
             "game": "", 
-            "steamid": steamid
+            "steamid": (steamid or "")
         }
         f.write(json.dumps(activity))
     return
 
+
+def steamInviteLink():
+    with open(application_path() + "\\rpc.json", "r") as f:
+        data = json.load(f)
+    if(data['steamid']):
+        steamid = data['steamid']
+    else:
+        steamid = ""
+    if(steamid != ""):
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        try:
+            print("Getting steam url code:")
+            r = requests.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80EC429274AF252714363656B71562C0&format=json&steamids=" + steamid, headers=headers)
+            response = json.loads(r.text)
+            if(type(response) == object):
+                lobbysteamid = response['response']['players'][0]['lobbysteamid']
+                gameid = response['response']['players'][0]['gameid']
+                steam_invite_url = "steam://joinlobby/" + gameid + "/" + lobbysteamid + "/" + steamid
+                print(steam_invite_url)
+                return steam_invite_url
+            else:
+                print("It appears steam services aren't making requests, or you haven't started steam, or that the game isn't running on steam.")
+        except Exception as e:
+            print("Unable to get steam id. Check to make sure Halo is running.")
+            print(e)
+            sleep(5)
+            steam_invite_url = None
+            return steam_invite_url
+    else:
+        print("Steam url is None.")
+        steam_invite_url = None
+        return steam_invite_url
+    
+ 
 if __name__ == '__main__':
     try:
         richpresence()
@@ -350,4 +367,3 @@ if __name__ == '__main__':
         print(e)
         print("Check to make sure discord and Halo Master Chief Collection are running.")
         sleep(5)
-        
