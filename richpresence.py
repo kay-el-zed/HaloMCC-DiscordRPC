@@ -339,7 +339,7 @@ def steamInviteLink():
             print("Getting steam url code:")
             r = requests.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80EC429274AF252714363656B71562C0&format=json&steamids=" + steamid, headers=headers)
             response = json.loads(r.text)
-            if(type(response) == object):
+            if(type(response) == dict):
                 lobbysteamid = response['response']['players'][0]['lobbysteamid']
                 gameid = response['response']['players'][0]['gameid']
                 steam_invite_url = "steam://joinlobby/" + gameid + "/" + lobbysteamid + "/" + steamid
