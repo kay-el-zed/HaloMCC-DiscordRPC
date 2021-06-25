@@ -1,9 +1,10 @@
-import json, auth, dictionary, math, requests
-from os import curdir, path, system
-from time import time, sleep
-from pypresence import Presence
-from additional import application_path, clear
+import json, auth, dictionary, math, requests, traceback
 
+from requests.models import Response
+from os import curdir, path, system, close
+from time import time, sleep
+from pypresence import Presence, presence
+from additional import application_path, clear, startRPC, writejsonfile
 
 def request(application_path):
     """Generates a request in a terminal to receive the presence data
@@ -11,46 +12,59 @@ def request(application_path):
     Args:
         application_path (str): The path of where the .exe or script is located.
     """
-    system((application_path + "\\node-v14.17.0-win-x64\\node.exe " + application_path + "\\richpresence.js"))
-    return
+    with open(application_path + '\\tokens\\xtoken.json', 'r+') as f:
+        data = json.load(f)
+    
+    displayclaims = data['DisplayClaims']['xui'][0]
 
-def richpresence():
+    host_Url = f"https://peoplehub.xboxlive.com/users/me/people/xuids({ displayclaims['xid'] })/decoration/presenceDetail"
+    headers = {
+            'Authorization': f"XBL3.0 x={ displayclaims['uhs'] };{ data['Token'] }",
+            'x-xbl-contract-version': '1',
+            'Accept-Language': 'en-US'
+            }
+    r = requests.get(host_Url,headers=headers)
+    if(r.status_code == 200):
+        response = json.loads(r.text)['people'][0]
+        print(r.status_code)
+        print(f"Successful response:\n{ json.dumps(response['presenceDetails'], indent=2) }")
+        i = 0
+        while(i < len(response['presenceDetails'])):
+            if("Halo: The Master Chief Collection - " in response['presenceDetails'][i]['PresenceText']):
+                presenceText = response['presenceDetails'][i]['PresenceText'].split(" - ")
+                presenceInfo = {
+                    "device": response['presenceDetails'][i]['Device'],
+                    "details": presenceText[2],
+                    "state": presenceText[1],
+                    "game": presenceText[0]
+                }
+                return presenceInfo
+            else:
+                i += 1
+                presenceInfo = False
+        return presenceInfo
+    elif(r.status_code == 403):
+        print("Invalid request. If the issue persists remove tokens and try again.")
+        auth.main()
+        request(application_path)
+    elif(r.status_code == 401):
+        print("Invalid token. Attempting to refresh token.")
+        sleep(2)
+        auth.main()
+        sleep(1)
+        request(application_path)
+    else:
+        print(f"Unable to complete request. Error {r.status_code}.\n{r.text}")
+        return False
+
+def richpresence(client_id, changedRPC, currentRPC, browsingStamp):
     """The main code need for the presence app to run
-    """
-    auth.main()
-    if(path.exists(application_path() + '\\rpc.json') != True):
-        writejsonfile()
-    
-    client_id = {
-        "main": "700853075023233024",
-        "Halo R": "725163293240590386",
-        "Halo CE": "725898626290942053",
-        "Halo 2": "730097982523047936",
-        "Halo 3": "748408159479005294",
-        "Halo 4": "748413810548801587"
-        }
-    changedRPC = {
-        "Else": "700853075023233024",
-        "Halo R": False,
-        "Halo CE": False,
-        "Halo 2": False,
-        "Halo 3": False,
-        "Halo 4": False
-        }
-    
-    currentRPC = startRPC(client_id['main'])
-    currentRPC.connect()
-    browsingStamp = timestamp()
-    
-    # Creating steam invite link
-    presence = readPresence()
-    
+    """    
     while True:
         try:
-            request(application_path())
-            presence = readPresence()
+            presence = request(application_path())
             steam_invite_url = steamInviteLink()
-            if(presence != False and presence['game'] != ""):
+            if(presence != False and presence != "" and presence != None):
                 if(presence['device'] == "Win32" or presence['device'] == "WindowsOneCore"):
                     if(presence['device'] == "Win32"):
                         deviceTitle = "Steam"
@@ -224,8 +238,7 @@ def richpresence():
                         if(steam_invite_url != ""):
                             rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp, steam_invite_url)
                         else:
-                            rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp)
-                    
+                            rpc(currentRPC, "large", presence['game'], device, deviceTitle, presence['state'], presence['details'], browsingStamp)    
             else:
                 print("Waiting for Halo Master Chief Collection to start.")
             sleep(7)
@@ -233,8 +246,7 @@ def richpresence():
         except KeyboardInterrupt or ValueError as e:
             print(e)
             currentRPC.close()
-        pass
-    
+        
 
 def readPresence():
     """Reads current presence data from rpc.json.
@@ -257,10 +269,6 @@ def timestamp():
     browsingStamp = time()
     return browsingStamp
 
-def startRPC(client_id):
-    RPC = Presence(client_id)
-    RPC.connect()
-    return RPC
 
 def closeRPC(RPC):
     Presence(RPC).close()
@@ -307,23 +315,7 @@ def rpc(rpc:object, li:str, lt:str, si:str, st:str, state:str, details:str, star
     except KeyboardInterrupt or Exception as e:
         print(e)
         rpc.close()
-    
-def writejsonfile():
-    print("No rpc.json. Writting new file ...")
-    if(path.isfile(application_path() + '\\rpc.json') != True):
-        open("rpc.json", "x")
-    print("You can get your steam id here: https://store.steampowered.com/account/ \nYou can also just hit enter to skip this prompt.")
-    steamid = str(input("Enter steam id:"))  
-    with open("rpc.json", "w") as f:
-        activity = {
-            "details": "",
-            "state": "",
-            "device": "",
-            "game": "", 
-            "steamid": (steamid or "")
-        }
-        f.write(json.dumps(activity))
-    return
+
 
 
 def steamInviteLink():
@@ -337,7 +329,7 @@ def steamInviteLink():
         headers = {'Content-type': 'application/x-www-form-urlencoded'}
         try:
             print("Getting steam url code:")
-            r = requests.get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80EC429274AF252714363656B71562C0&format=json&steamids=" + steamid, headers=headers)
+            r = requests.get(f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=80EC429274AF252714363656B71562C0&format=json&steamids={steamid}", headers=headers)
             response = json.loads(r.text)
             if(type(response) == dict):
                 lobbysteamid = response['response']['players'][0]['lobbysteamid']
@@ -361,9 +353,32 @@ def steamInviteLink():
  
 if __name__ == '__main__':
     try:
-        richpresence()
+        if(path.exists(application_path() + '\\rpc.json') != True):
+            writejsonfile()
+        
+        client_id = {
+            "main": "700853075023233024",
+            "Halo R": "725163293240590386",
+            "Halo CE": "725898626290942053",
+            "Halo 2": "730097982523047936",
+            "Halo 3": "748408159479005294",
+            "Halo 4": "748413810548801587"
+        }
+        changedRPC = {
+            "Else": "700853075023233024",
+            "Halo R": False,
+            "Halo CE": False,
+            "Halo 2": False,
+            "Halo 3": False,
+            "Halo 4": False
+        }
+        currentRPC = startRPC(client_id['main'])
+        currentRPC.connect()
+        browsingStamp = timestamp()
+        richpresence(client_id, changedRPC, currentRPC, browsingStamp)
 
     except Exception as e:
         print(e)
+        print(traceback.format_exc())
         print("Check to make sure discord and Halo Master Chief Collection are running.")
         sleep(5)

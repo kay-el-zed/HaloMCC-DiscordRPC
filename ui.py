@@ -1,7 +1,7 @@
 import json, ctypes, auth, shutil, richpresence 
-from time import sleep
+from time import sleep, time
 from os import system, name, sys, path
-from additional import application_path, clear
+from additional import application_path, clear, writejsonfile, startRPC
 
 def main():
     splashScreen()
@@ -22,14 +22,44 @@ def option(selection):
     """
     if(selection == 1):
         clear()
-        auth.main()
-        optionUI()
+        try:
+            auth.main()
+        except Exception:
+            pass
+        finally:
+            optionUI()
     elif(selection == 2):
-        print("Run the command 'Ctrl C' to exit the program.")
-        print("Loading Code ...")
-        sleep(2)
         clear()
-        richpresence.richpresence()
+        if(path.exists(application_path() + '\\rpc.json') != True):
+                writejsonfile()
+            
+        client_id = {
+            "main": "700853075023233024",
+            "Halo R": "725163293240590386",
+            "Halo CE": "725898626290942053",
+            "Halo 2": "730097982523047936",
+            "Halo 3": "748408159479005294",
+            "Halo 4": "748413810548801587"
+        }
+        changedRPC = {
+            "Else": "700853075023233024",
+            "Halo R": False,
+            "Halo CE": False,
+            "Halo 2": False,
+            "Halo 3": False,
+            "Halo 4": False
+        }
+        currentRPC = startRPC(client_id['main'])
+        currentRPC.connect()
+        browsingStamp = time()
+        try:
+            while True:
+                richpresence.richpresence(client_id, changedRPC, currentRPC, browsingStamp)
+        except Exception:
+            pass
+        finally:
+            clear()
+            optionUI()
     elif(selection == 3):
         if(path.isdir(application_path() + "\\tokens") == True):
             shutil.rmtree(application_path() + "\\tokens")
@@ -45,7 +75,7 @@ def option(selection):
         clear()
         optionUI()    
     elif(selection == 4):
-        sys.exit()
+        quit()
     else:
         print("WIP")
         sleep(2)
