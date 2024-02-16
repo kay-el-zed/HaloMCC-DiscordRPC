@@ -135,7 +135,7 @@ def jsonDictionary(dictionary):
         "Longshore" : "longshore",
         "Narrows" : "narrows",
         "Orbital" : "orbital",
-        "Rats nest" : "rat_s_nest",
+        "Rat's nest" : "rat_s_nest",
         "Sandbox" : "sandbox",
         "Sandtrap" : "sandtrap",
         "Snowbound" : "snowbound",

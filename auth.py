@@ -1,7 +1,7 @@
 import requests, json
 from additional import clear, application_path
 from datetime import datetime
-from os import path, makedirs
+from os import path, makedirs, replace
 import webbrowser
 from time import sleep
 CLIENT_ID = "8f9b5ee4-b4eb-40ea-a02f-c9be1f7ae7bf"
@@ -17,14 +17,13 @@ def main():
             tokens = json.load(f)
     else:
         tokens = None
-    if(tokens != None):        
-        if(current > tokens['NotAfter']): 
-            if(application_path() + "\\tokens\\accesstoken.json"):
-                with open((application_path() + "\\tokens\\accesstoken.json"), 'r+') as f:
-                    accesstoken = json.load(f)
-                    access_token = refreshToken(accesstoken['refresh_token'])
-                    user_token = userToken(access_token)
-                    XToken(user_token)
+    if(tokens != None):      
+        if(application_path() + "\\tokens\\accesstoken.json"):
+            with open((application_path() + "\\tokens\\accesstoken.json"), 'r+') as f:
+                accesstoken = json.load(f)
+                access_token = refreshToken(accesstoken['refresh_token'])
+                user_token = userToken(access_token)
+                XToken(user_token)
             print("Generated a token.")
     else:
         url()
@@ -76,7 +75,7 @@ def accessToken(authorization_code) -> str:
         return
 
     access_token = resp.json()["access_token"]
-    with open('tokens\\accesstoken.json', 'w+') as f:
+    with open(application_path() + '\\tokens\\accesstoken.json', 'w+') as f:
         f.write(json.dumps(resp.json(), indent=2))
     return access_token    
         
